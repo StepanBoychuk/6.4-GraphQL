@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "d7ba54de-e8a5-453a-a5b6-c9480c88c073",
+		"name": "graphql",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31731440"
+	},
+	"item": [
+		{
+			"name": "get all users",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n    findAll {\n        id,\n        username,\n        firstName,\n        lastName,\n        rating,\n        avatarUrl\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "ec2-35-157-187-105.eu-central-1.compute.amazonaws.com:3000/graphql",
+					"host": [
+						"ec2-35-157-187-105",
+						"eu-central-1",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "find one by id",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query($id: String!) {\n    findOne(id: $id) {\n        id,\n        username,\n        rating,\n        role \n    }\n}",
+						"variables": "{\n    \"id\": \"66b4b9be415c96fcf443dd46\"\n}"
+					}
+				},
+				"url": {
+					"raw": "ec2-35-157-187-105.eu-central-1.compute.amazonaws.com:3000/graphql",
+					"host": [
+						"ec2-35-157-187-105",
+						"eu-central-1",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation signup($input: SignUpInput!) {\n    signup(signUpInput: $input) {\n        id,\n        username,\n        firstName,\n    }\n}",
+						"variables": "{\n    \"input\": {\n        \"username\": \"user2\",\n        \"password\": \"password\",\n        \"firstName\": \"User's first name\"\n    }\n}"
+					}
+				},
+				"url": {
+					"raw": "ec2-35-157-187-105.eu-central-1.compute.amazonaws.com:3000/graphql",
+					"host": [
+						"ec2-35-157-187-105",
+						"eu-central-1",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign in",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation signin($input: SignInInput!) {\n    signin(signInInput: $input) {\n        access_token,\n    }\n}",
+						"variables": "{\n    \"input\": {\n        \"username\": \"user\",\n        \"password\": \"password\"\n    }\n}"
+					}
+				},
+				"url": {
+					"raw": "ec2-35-157-187-105.eu-central-1.compute.amazonaws.com:3000/graphql",
+					"host": [
+						"ec2-35-157-187-105",
+						"eu-central-1",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change data",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjRiNDRlNDE1Yzk2ZmNmNDQzZGE5OCIsInVzZXJuYW1lIjoidXNlciIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzIzMTE4ODI5LCJleHAiOjE3MjMyMDUyMjl9.VfVx7BQ9E0bBNs8YoLSTNeAUcR97n-9zwC1wj5brVg4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation update($id: String!, $input: UpdateUserInput!) {\n    updateUser(id: $id, updateUserInput: $input) {\n        id,\n        username,\n        firstName,\n        lastName\n    }\n}",
+						"variables": "{\n    \"id\": \"66b4b44e415c96fcf443da98\",\n    \"input\": {\n        \"firstName\": \"User's new first name\",\n        \"lastName\": \"User's new last name\"\n    }\n}"
+					}
+				},
+				"url": {
+					"raw": "ec2-35-157-187-105.eu-central-1.compute.amazonaws.com:3000/graphql",
+					"host": [
+						"ec2-35-157-187-105",
+						"eu-central-1",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjRiNDRlNDE1Yzk2ZmNmNDQzZGE5OCIsInVzZXJuYW1lIjoidXNlciIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzIzMTE4ODI5LCJleHAiOjE3MjMyMDUyMjl9.VfVx7BQ9E0bBNs8YoLSTNeAUcR97n-9zwC1wj5brVg4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation delete($id: String!) {\n    deleteUser(id: $id) {\n        username,\n        deletedAt\n    }\n}",
+						"variables": "{\n    \"id\": \"66b4b44e415c96fcf443da98\"\n}"
+					}
+				},
+				"url": {
+					"raw": "ec2-35-157-187-105.eu-central-1.compute.amazonaws.com:3000/graphql",
+					"host": [
+						"ec2-35-157-187-105",
+						"eu-central-1",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "vote for another user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjRiNDlmNDE1Yzk2ZmNmNDQzZGFiMyIsInVzZXJuYW1lIjoidXNlcjEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcyMzEyMDQzMywiZXhwIjoxNzIzMjA2ODMzfQ.VaSqy7I_CA6h0KWYVSVisy0zS5nV6KGKuNXU5GkaRIA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation vote ($input: VoteInput!) {\n    vote(voteInput: $input) {\n        id,\n        user,\n        targetUser,\n        voteType\n    }\n}",
+						"variables": "{\n    \"input\": {\n        \"targetUser\": \"66b4b9be415c96fcf443dd46\",\n        \"voteType\": -1\n    }\n}"
+					}
+				},
+				"url": {
+					"raw": "ec2-35-157-187-105.eu-central-1.compute.amazonaws.com:3000/graphql",
+					"host": [
+						"ec2-35-157-187-105",
+						"eu-central-1",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Url for avatar upload",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjRiNDlmNDE1Yzk2ZmNmNDQzZGFiMyIsInVzZXJuYW1lIjoidXNlcjEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcyMzEyMDQzMywiZXhwIjoxNzIzMjA2ODMzfQ.VaSqy7I_CA6h0KWYVSVisy0zS5nV6KGKuNXU5GkaRIA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation($input: AvatarUploadInput!) {\n    avatarUpload(avatarUploadInput: $input) {\n        urlForUpload\n    }\n}",
+						"variables": "{\n    \"input\": {\n        \"avatarName\": \"cat.jpeg\"\n    }\n}"
+					}
+				},
+				"url": {
+					"raw": "ec2-35-157-187-105.eu-central-1.compute.amazonaws.com:3000/graphql",
+					"host": [
+						"ec2-35-157-187-105",
+						"eu-central-1",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

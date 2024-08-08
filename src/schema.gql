@@ -1,0 +1,77 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: String!
+  username: String!
+  firstName: String
+  lastName: String
+  avatarUrl: String
+  rating: Int!
+  role: String!
+  deletedAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type SignInResponse {
+  access_token: String!
+  user: User!
+}
+
+type Vote {
+  id: String!
+  user: String!
+  targetUser: String!
+  voteType: Int!
+}
+
+type AvatarUploadResponse {
+  urlForUpload: String!
+}
+
+type Query {
+  findAll: [User!]!
+  findOne(id: String!): User!
+}
+
+type Mutation {
+  updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
+  deleteUser(id: String!): User!
+  signin(signInInput: SignInInput!): SignInResponse!
+  signup(signUpInput: SignUpInput!): User!
+  vote(voteInput: VoteInput!): Vote!
+  avatarUpload(avatarUploadInput: AvatarUploadInput!): AvatarUploadResponse!
+}
+
+input UpdateUserInput {
+  username: String
+  password: String
+  firstName: String
+  lastName: String
+}
+
+input SignInInput {
+  username: String!
+  password: String!
+}
+
+input SignUpInput {
+  username: String!
+  password: String!
+  firstName: String
+  lastName: String
+}
+
+input VoteInput {
+  targetUser: String!
+  voteType: Int!
+}
+
+input AvatarUploadInput {
+  avatarName: String!
+}
