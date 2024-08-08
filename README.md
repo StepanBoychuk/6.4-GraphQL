@@ -1,73 +1,104 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+This is my GraphQL server for user managment
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Getting Started
+To run this project, copy it from github and then run
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
+```
+docker-compose up
 ```
 
-## Running the app
+# Usage
+To interact with API use a GraphQL client such as GraphQL Playground or use Postman
 
-```bash
-# development
-$ npm run start
+# Schema Overview
+## Types
+### User
 
-# watch mode
-$ npm run start:dev
+Represents a user in the system.
 
-# production mode
-$ npm run start:prod
-```
+    id: String! - Unique identifier for the user.
+    username: String! - Username of the user.
+    firstName: String - First name of the user.
+    lastName: String - Last name of the user.
+    avatarUrl: String - URL of the user's avatar.
+    rating: Int! - User's rating.
+    role: String! - Role of the user (e.g., admin, user).
+    deletedAt: DateTime - Timestamp of when the user was deleted (if applicable).
 
-## Test
+###  SignInResponse
 
-```bash
-# unit tests
-$ npm run test
+Represents the response received after a successful sign-in.
 
-# e2e tests
-$ npm run test:e2e
+    access_token: String! - JWT access token for the user.
+    user: User! - The signed-in user's information.
 
-# test coverage
-$ npm run test:cov
-```
+### Vote
 
-## Support
+Represents a vote made by a user on another user.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+    id: String! - Unique identifier for the vote.
+    user: String! - ID of the user who made the vote.
+    targetUser: String! - ID of the user who received the vote.
+    voteType: Int! - Type of the vote (e.g., upvote, downvote).
 
-## Stay in touch
+### AvatarUploadResponse
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Represents the response after requesting an avatar upload URL.
 
-## License
+    urlForUpload: String! - Pre-signed URL for uploading the avatar.
 
-Nest is [MIT licensed](LICENSE).
+
+## Queries
+### findAll: [User!]!
+
+Fetches all users in the system.
+### findOne(id: String!): User!
+
+Fetches a single user by their ID.
+## Mutations
+### updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
+
+Updates the details of an existing user.
+### deleteUser(id: String!): User!
+
+Marks a user as deleted.
+### signin(signInInput: SignInInput!): SignInResponse!
+
+Authenticates a user and returns an access token and user information.
+###  signup(signUpInput: SignUpInput!): User!
+
+Registers a new user in the system.
+### vote(voteInput: VoteInput!): Vote!
+
+Records a vote by a user on another user.
+### avatarUpload(avatarUploadInput: AvatarUploadInput!): AvatarUploadResponse!
+
+Generates a pre-signed URL for uploading a user's avatar.
+## Input Types
+### UpdateUserInput
+
+    username: String - Updated username.
+    password: String - Updated password.
+    firstName: String - Updated first name.
+    lastName: String - Updated last name.
+
+### SignInInput
+
+    username: String! - Username of the user.
+    password: String! - Password of the user.
+
+### SignUpInput
+
+    username: String! - Username for the new user.
+    password: String! - Password for the new user.
+    firstName: String - First name of the new user.
+    lastName: String - Last name of the new user.
+
+### VoteInput
+
+    targetUser: String! - ID of the user to be voted on.
+    voteType: Int! - Type of the vote (e.g., upvote, downvote).
+
+### AvatarUploadInput
+
+    avatarName: String! - Name of the avatar file to be uploaded.
