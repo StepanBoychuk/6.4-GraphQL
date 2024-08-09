@@ -2,8 +2,8 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { User } from 'src/users/schemas/user.schema';
-import { SignUpInput } from './dto/signup.input';
-import { SignInInput } from './dto/signin.input';
+import { SignUpInputDto } from './dto/signup.input.dto';
+import { SignInInputDto } from './dto/signin.input.dto';
 import { HashService } from 'src/hash/hash.service';
 import { JwtService } from '@nestjs/jwt';
 
@@ -16,7 +16,7 @@ export class AuthService {
     private hashService: HashService,
   ) {}
 
-  async signup(signUpInput: SignUpInput): Promise<User> {
+  async signup(signUpInput: SignUpInputDto): Promise<User> {
     const user = await this.userModel.findOne({
       username: signUpInput.username,
     });
@@ -25,7 +25,7 @@ export class AuthService {
     return await newUser.save();
   }
 
-  async signin(signinInput: SignInInput): Promise<object> {
+  async signin(signinInput: SignInInputDto): Promise<object> {
     const user = await this.userModel.findOne(
       { username: signinInput.username },
       'id username password role',

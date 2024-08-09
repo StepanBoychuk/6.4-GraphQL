@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { User } from './entities/user.entitie';
 import { UsersService } from './users.service';
-import { UpdateUserInput } from './dto/updateUser.input';
+import { UpdateUserInputDto } from './dto/updateUser.input.dto';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/role.guard';
@@ -24,7 +24,7 @@ export class UsersResolver {
   @UseGuards(JwtAuthGuard, RolesGuard)
   async updateUser(
     @Args('id') id: string,
-    @Args('updateUserInput') updateUserInput: UpdateUserInput,
+    @Args('updateUserInput') updateUserInput: UpdateUserInputDto,
   ) {
     return this.usersService.updateUser(id, updateUserInput);
   }

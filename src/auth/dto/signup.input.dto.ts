@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 
 @InputType()
-export class SignUpInput {
+export class SignUpInputDto {
   @Field()
   @IsNotEmpty()
   @IsString()

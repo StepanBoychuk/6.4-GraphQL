@@ -3,7 +3,7 @@ import { VoteService } from './vote.service';
 import { Vote } from './entities/vote.entitie';
 import { HttpException, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-import { VoteInput } from './dto/vote.input';
+import { VoteInputDto } from './dto/vote.input.dto';
 import { CurrentUser } from 'src/users/decorators/user.decorator';
 
 @Resolver()
@@ -12,7 +12,7 @@ export class VoteResolver {
 
   @Mutation(() => Vote)
   @UseGuards(JwtAuthGuard)
-  async vote(@Args('voteInput') voteInput: VoteInput, @CurrentUser() user) {
+  async vote(@Args('voteInput') voteInput: VoteInputDto, @CurrentUser() user) {
     if (user.id == voteInput.targetUser) {
       throw new HttpException('You cannot vote for yourself', 400);
     }

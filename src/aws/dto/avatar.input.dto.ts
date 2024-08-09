@@ -2,7 +2,7 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsNotEmpty, IsString, Matches } from 'class-validator';
 
 @InputType()
-export class AvatarUploadInput {
+export class AvatarUploadInputDto {
   @Field()
   @IsNotEmpty()
   @IsString()

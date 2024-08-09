@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class AvatarUploadResponse {
+export class AvatarUploadResponseDto {
   @Field()
   urlForUpload: string;
 }
